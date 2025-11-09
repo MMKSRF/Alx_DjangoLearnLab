@@ -42,7 +42,16 @@ def books_by_author(author_name):
         return Book.objects.filter(author=author)
     except Author.DoesNotExist:
         return []
-
+# 3. Retrieve the librarian for a library
+def librarian_for_library(library_name):
+    try:
+        library = Library.objects.get(name=library_name)
+        # ✅ Use Librarian.objects.get(library=...)
+        return Librarian.objects.get(library=library)
+    except Library.DoesNotExist:
+        return None
+    except Librarian.DoesNotExist:
+        return None
 # Example usage
 if __name__ == "__main__":
     print("Books by Author John Doe:", books_by_author("John Doe"))
