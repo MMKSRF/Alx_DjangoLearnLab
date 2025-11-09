@@ -3,6 +3,8 @@
 import os
 import sys
 
+from django.contrib import admin
+from django.urls import path, include
 
 def main():
     """Run administrative tasks."""
@@ -16,6 +18,15 @@ def main():
             "forget to activate a virtual environment?"
         ) from exc
     execute_from_command_line(sys.argv)
+
+
+
+
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('relationship_app.urls')),  # include our app URLs
+]
 
 
 if __name__ == '__main__':
