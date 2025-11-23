@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Example Form</title>
+</head>
+<body>
+    <h1>Example Form</h1>
+    <p>This form demonstrates CSRF protection and secure form handling.</p>
+    
+    {% if success_message %}
+        <div style="color: green; padding: 10px; border: 1px solid green; margin-bottom: 20px;">
+            {{ success_message }}
+        </div>
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Submit</button>
+    </form>
+    
+    {% if form.errors %}
+        <div class="errors">
+            <h3>Form Errors:</h3>
+            {{ form.errors }}
+        </div>
+    {% endif %}
+    
+    <a href="{% url 'book_list' %}">Back to Book List</a>
+</body>
+</html>
+
