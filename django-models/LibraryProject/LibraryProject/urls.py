@@ -20,6 +20,8 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('relationship_app.urls')),
+    path("add_book/", views.add_book, name="add_book"),
+    path("edit_book/", views.edit_book, name="edit_book"),
 ]
 
-contain: ["add_book/", "edit_book/"]
+# contain: ["add_book/", "edit_book/"]
