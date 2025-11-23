@@ -1,7 +1,17 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth.decorators import permission_required
 from .models import Book
-from .forms import BookForm, ExampleForm
+from .forms import BookForm
+from .forms import ExampleForm   # <-- Added as required
+
+
+# Book Form
+# Security: Using Django ModelForm ensures automatic validation and prevents SQL injection
+# All user inputs are validated through Django's form validation system
+class BookForm(ModelForm):
+    class Meta:
+        model = Book
+        fields = ['title', 'author', 'publication_year']
 
 
 # Permission-protected views
@@ -77,28 +87,3 @@ def book_delete(request, pk):
         book.delete()  # Safe: Django ORM prevents SQL injection
         return redirect('book_list')
     return render(request, 'bookshelf/book_delete.html', {'book': book})
-
-
-def form_example(request):
-    """
-    Example form view demonstrating CSRF protection and secure form handling.
-    
-    Security:
-    - CSRF protection via {% csrf_token %} in template
-    - Form validation prevents invalid input
-    - No database operations, safe from SQL injection
-    """
-    if request.method == 'POST':
-        form = ExampleForm(request.POST)  # Safe: Django forms handle input validation
-        if form.is_valid():  # Validates and sanitizes all inputs
-            # Process form data (example - no database operations)
-            example_data = form.cleaned_data['example_field']
-            # In a real scenario, you would process the data here
-            return render(request, 'bookshelf/form_example.html', {
-                'form': ExampleForm(),
-                'success_message': f'Form submitted successfully with: {example_data}'
-            })
-    else:
-        form = ExampleForm()
-    
-    return render(request, 'bookshelf/form_example.html', {'form': form})
