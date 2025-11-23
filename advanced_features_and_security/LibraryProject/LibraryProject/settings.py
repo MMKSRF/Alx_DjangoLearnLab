@@ -170,25 +170,25 @@ CSRF_COOKIE_SECURE = False  # Set to True in production with HTTPS
 # Note: Set to False during development if not using HTTPS
 SESSION_COOKIE_SECURE = False  # Set to True in production with HTTPS
 
+
+
 # HTTPS AND SECURE REDIRECTS (Task 3)
-# SECURE_SSL_REDIRECT: Redirects all non-HTTPS requests to HTTPS
-# Set to True in production when SSL/TLS is configured
-# Note: Set to False during development
+# Redirect HTTP to HTTPS (enable only in production)
 SECURE_SSL_REDIRECT = False  # Set to True in production with HTTPS
 
-# HTTP Strict Transport Security (HSTS) (Task 3)
-# Instructs browsers to only access the site via HTTPS for the specified time
-# Value is in seconds (31536000 = 1 year)
-# Only enable if you have HTTPS configured, as it's difficult to undo
-SECURE_HSTS_SECONDS = 0  # Set to 31536000 (1 year) in production with HTTPS
+# HTTP Strict Transport Security (HSTS)
+SECURE_HSTS_SECONDS = 0  # Set to 31536000 in production
+SECURE_HSTS_INCLUDE_SUBDOMAINS = False
+SECURE_HSTS_PRELOAD = False
 
-# HSTS Include Subdomains (Task 3)
-# Includes all subdomains in the HSTS policy
-SECURE_HSTS_INCLUDE_SUBDOMAINS = False  # Set to True in production with HTTPS
+# Proxy SSL Header (REQUIRED by secure header checks)
+# Ensures Django recognizes HTTPS when behind a reverse proxy or load balancer
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
 
-# HSTS Preload (Task 3)
-# Allows the site to be included in browser HSTS preload lists
-SECURE_HSTS_PRELOAD = False  # Set to True in production with HTTPS
+
+
+
+
 
 # Content Security Policy (CSP) (Task 2)
 # Note: This is a basic implementation. For production, consider using django-csp
@@ -196,3 +196,4 @@ SECURE_HSTS_PRELOAD = False  # Set to True in production with HTTPS
 # CSP is set via middleware or response headers
 # Example CSP header (can be set in middleware or via django-csp):
 # Content-Security-Policy: default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'
+
