@@ -40,6 +40,7 @@ INSTALLED_APPS = [
 
         # Third-party
     'rest_framework',
+    'rest_framework.authtoken',  # Token authentication for API
 
     # Local apps
     'api',
@@ -126,3 +127,22 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+# Django REST Framework Configuration
+# https://www.django-rest-framework.org/api-guide/settings/
+
+REST_FRAMEWORK = {
+    # Authentication classes - Token authentication is used to verify user identity
+    # Users must include their token in the Authorization header: "Token <token>"
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',  # Also support session auth for browsable API
+    ],
+    
+    # Permission classes - By default, require authentication to access API endpoints
+    # This ensures only authenticated users can access the API
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+}
